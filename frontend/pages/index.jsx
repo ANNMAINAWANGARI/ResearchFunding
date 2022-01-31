@@ -66,7 +66,7 @@ export default function Home() {
             <Typography variant="h2" align="center" color='black'>
               Fund Your Research Startup
             </Typography>
-            <Typography variant="h5" align="center" color="grey" color='#00A86B'>
+            <Typography variant="h5" align="center" color="gray" >
               Research, Innovate, Make and Produce with Crypto Funding.
             </Typography>
           </Box>
