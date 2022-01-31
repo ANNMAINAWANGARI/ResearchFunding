@@ -8,7 +8,7 @@ contract ResearchFunding {
      using Roles for Roles.Role;
     /** @dev GRO:Global Research Organization**/
      Roles.Role private _GRO;
-     Roles. Role private _ResearchOrg;
+     Roles.Role private _ResearchOrg;
 
 /**  @dev think of it like an object that stores each organizations metadata**/
      struct ROrganizations{
@@ -28,6 +28,7 @@ address[] public orgAccts;
 
 /** @dev donate event that will be emmited from the frontend**/
 event donate(address, uint256); 
+/** @dev it is the first line of code that is run when the contract compiles.add() is a built in function from openzepplin/contracts/access/roles */
 constructor() public{
 _GRO.add(msg.sender);
 }    
