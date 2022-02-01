@@ -1,16 +1,10 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  Container,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Button, Container, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 import { useRouter } from "next/router";
 
-const donations = () => {
-  const router = useRouter();
+const register = () => {
+    const router = useRouter();
   return (
     <div>
       <AppBar
@@ -58,4 +52,4 @@ const donations = () => {
   );
 };
 
-export default donations;
+export default register;
