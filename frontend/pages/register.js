@@ -16,7 +16,7 @@ const register = () => {
     <div>
       <AppBar
         position="sticky"
-        elevation={0}
+        elevation={1}
         color="transparent"
         sx={{ height: "10vh", marginBottom: 6 }}
       >
@@ -65,20 +65,54 @@ const register = () => {
           maxWidth: "650px",
           alignItems: "center",
           justifyContent: "center",
-          marginLeft:'auto',
-          marginRight:'auto',
+          marginLeft: "auto",
+          marginRight: "auto",
           //border:'1px solid #00A86B'
         }}
       >
-        <TextField id="outlined-address" label="Address" fullWidth sx={{margin:1}}/>
-        <TextField id="outlined-organization" label="Organization" fullWidth sx={{margin:2}}/>
-        <TextField id="outlined-country" label="Country" fullWidth sx={{margin:2}}/>
-        <TextField id="outlined-fund" label="FundingPurpose" fullWidth sx={{margin:2}}/>
-        <TextField id="outlined-amount" label="AmountRequested" fullWidth sx={{margin:2}}/>
-        <TextField id="outlined-amtRaised" label="AmountRaised" fullWidth sx={{margin:2}}/>
+        <TextField
+          id="outlined-address"
+          label="Address"
+          fullWidth
+          sx={{ margin: 1 }}
+        />
+        <TextField
+          id="outlined-organization"
+          label="Organization"
+          fullWidth
+          sx={{ margin: 2 }}
+        />
+        <TextField
+          id="outlined-country"
+          label="Country"
+          fullWidth
+          sx={{ margin: 2 }}
+        />
+        <TextField
+          id="outlined-fund"
+          label="FundingPurpose"
+          fullWidth
+          sx={{ margin: 2 }}
+        />
+        <TextField
+          id="outlined-amount"
+          label="AmountRequested"
+          fullWidth
+          sx={{ margin: 2 }}
+        />
+        <TextField
+          id="outlined-amtRaised"
+          label="AmountRaised"
+          fullWidth
+          sx={{ margin: 2 }}
+        />
       </form>
-      <Box sx={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-      <Button variant='contained'sx={{backgroundColor:'#00A86B'}}>Submit</Button>
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <Button variant="contained" sx={{ backgroundColor: "#00A86B" }}>
+          Submit
+        </Button>
       </Box>
     </div>
   );

@@ -83,7 +83,7 @@ const donations = () => {
     <div>
       <AppBar
         position="sticky"
-        elevation={0}
+        elevation={1}
         color="transparent"
         sx={{ height: "10vh", marginBottom: 8 }}
       >

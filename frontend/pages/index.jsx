@@ -21,7 +21,7 @@ export default function Home() {
       <Box>
         <AppBar
           position="sticky"
-          elevation={0}
+          elevation={1}
           color="transparent"
           sx={{ height: "10vh" }}
         >
