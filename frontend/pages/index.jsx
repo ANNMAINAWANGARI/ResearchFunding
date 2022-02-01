@@ -62,7 +62,7 @@ export default function Home() {
             height: "90vh",
           }}
         >
-          <Box>
+          <Box mt={-15}>
             <Typography variant="h2" align="center" color='black'>
               Fund Your Research Startup
             </Typography>
