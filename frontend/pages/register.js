@@ -7,10 +7,25 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, {useEffect} from "react";
 import { useRouter } from "next/router";
+import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
 
 const register = () => {
+  useEffect(()=>{
+    if (typeof window.ethereum == 'undefined') {
+      console.log('MetaMask is not installed!');
+      alert('Please install MetaMask!');
+    }
+    function register(){
+      try{
+
+      }catch{
+
+      }
+    }
+    
+  })
   const router = useRouter();
   return (
     <div>
