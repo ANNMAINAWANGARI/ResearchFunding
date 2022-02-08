@@ -1,16 +1,12 @@
 import Head from "next/head";
 import {
-  AppBar,
   Box,
-  Button,
   Container,
-  Toolbar,
   Typography,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
-  const router = useRouter();
   return (
     <div>
       <Head>
@@ -19,40 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box>
-        <AppBar
-          position="sticky"
-          elevation={1}
-          color="transparent"
-          sx={{ height: "10vh" }}
-        >
-          <Container maxWidth="lg" sx={{ paddingLeft: 0, paddingRight: 0 }}>
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="h6">Research Funding DApp</Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#00A86B", marginRight: 2 }}
-                  onClick={() => router.push("/donations")}
-                >
-                  Donations
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#00A86B" }}
-                  onClick={() => router.push("/register")}
-                >
-                  Register Organization
-                </Button>
-              </Box>
-            </Toolbar>
-          </Container>
-        </AppBar>
+        <Navbar/>
         <Container
           maxWidth="lg"
           sx={{

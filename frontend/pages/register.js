@@ -1,83 +1,80 @@
 import {
-  AppBar,
   Button,
-  Container,
   TextField,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, {useEffect,useState} from "react";
+import React, {useEffect,useState,useRef} from "react";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 import { providers, Contract } from "ethers";
 import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
+import Navbar from "../components/Navbar";
 
 const register = () => {
   const [address,setAddress]=useState('');
   const [organization,setOrganization]=useState('');
   const [country,setCountry]=useState('');
-  const [fundingPupose,setFundingPurpose]=useState('');
+  const [fundingPurpose,setFundingPurpose]=useState('');
   const [amountRequested,setAmountRequested]=useState('');
-  const [amountRaised,setAmountRaised]=useState('');
+  const [loading, setLoading] = useState(false);
+  const web3ModalRef = useRef();
   useEffect(()=>{
-    if (typeof window.ethereum == 'undefined') {
+    
+    if(typeof window.ethereum !== 'undefined'){
+      checkWallet();
+     /* web3ModalRef.current = new Web3Modal({
+        network:'rinkeby',
+        providerOptions:{},
+        disableInjectedProvider:false,
+      })*/
+    }else{
       console.log('MetaMask is not installed!');
       alert('Please install MetaMask!');
     }
-    function register(){
-      try{
-
-      }catch{
-
-      }
-    }
-    
   },[])
-  const router = useRouter();
+  const checkWallet = async ()=>{
+    try{
+      await getProviderOrSigner();
+    }catch(err){
+      console.error(err);
+    }
+  }
+  const getProviderOrSigner = async (needSigner =false)=>{
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new providers.Web3Provider(provider);
+    const {chainId} = await web3Provider.getNetwork();
+    if(chainId !== 4){
+      window.alert("Please change the network to Rinkeby");
+      throw new Error("Please change the network to Rinkeby");
+    }
+    if(needSigner){
+      const signer = web3Provider.getSigner();
+      return signer;
+    }
+    return web3Provider;
+  }
+  /**register startup organization */
+   const addOrganization = async (e)=>{
+     try{
+       e.preventDefault();
+       const signer = await getProviderOrSigner(true);
+       const researchFundingContract = new Contract(
+         RESEARCHFUNDING_CONTRACT_ADDRESS, abi,signer
+       );
+       const tx = await researchFundingContract.addOrg(address,organization,country,fundingPurpose,amountRequested);
+       setLoading(true);
+       await tx.wait();
+       setLoading(false);
+
+     }
+     catch(err){
+        console.error(err);
+     }
+   }
   return (
     <div>
-      <AppBar
-        position="sticky"
-        elevation={3}
-        color="transparent"
-        sx={{ height: "10vh", marginBottom: 6 }}
-      >
-        <Container maxWidth="lg" sx={{ paddingLeft: 0, paddingRight: 0 }}>
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6">Research Funding DApp</Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#00A86B", marginRight: 2 }}
-                onClick={() => router.push("/")}
-              >
-                Home
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#00A86B", marginRight: 2 }}
-                onClick={() => router.push("/donations")}
-              >
-                Donations
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#00A86B" }}
-                onClick={() => router.push("/register")}
-              >
-                Register Organization
-              </Button>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
+      <Navbar/>
       <Typography variant="h4" align="center" gutterBottom>
         Register your research Organization
       </Typography>
@@ -92,6 +89,7 @@ const register = () => {
           marginRight: "auto",
           //border:'1px solid #00A86B'
         }}
+        onSubmit={addOrganization}
       >
         <TextField
           id="outlined-address"
@@ -120,7 +118,7 @@ const register = () => {
         <TextField
           id="outlined-fund"
           label="FundingPurpose"
-          value={fundingPupose}
+          value={fundingPurpose}
           onChange={(e)=>setFundingPurpose(e.target.value)}
           fullWidth
           sx={{ margin: 2 }}
@@ -133,22 +131,15 @@ const register = () => {
           fullWidth
           sx={{ margin: 2 }}
         />
-        <TextField
-          id="outlined-amtRaised"
-          label="AmountRaised"
-          value={amountRaised}
-          onChange={(e)=>setAmountRaised(e.target.value)}
-          fullWidth
-          sx={{ margin: 2 }}
-        />
-      </form>
-      <Box
+        <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <Button variant="contained" sx={{ backgroundColor: "#00A86B" }}>
+        <Button variant="contained" type='submit'sx={{ backgroundColor: "#00A86B" }}>
           Submit
         </Button>
       </Box>
+      </form>
+      
     </div>
   );
 };
