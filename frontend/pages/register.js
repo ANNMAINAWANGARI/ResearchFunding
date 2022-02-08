@@ -19,20 +19,7 @@ const register = () => {
   const [amountRequested,setAmountRequested]=useState('');
   const [loading, setLoading] = useState(false);
   const web3ModalRef = useRef();
-  useEffect(()=>{
-    
-    if(typeof window.ethereum !== 'undefined'){
-      checkWallet();
-     /* web3ModalRef.current = new Web3Modal({
-        network:'rinkeby',
-        providerOptions:{},
-        disableInjectedProvider:false,
-      })*/
-    }else{
-      console.log('MetaMask is not installed!');
-      alert('Please install MetaMask!');
-    }
-  },[])
+  
   const checkWallet = async ()=>{
     try{
       await getProviderOrSigner();
@@ -40,20 +27,7 @@ const register = () => {
       console.error(err);
     }
   }
-  const getProviderOrSigner = async (needSigner =false)=>{
-    const provider = await web3ModalRef.current.connect();
-    const web3Provider = new providers.Web3Provider(provider);
-    const {chainId} = await web3Provider.getNetwork();
-    if(chainId !== 4){
-      window.alert("Please change the network to Rinkeby");
-      throw new Error("Please change the network to Rinkeby");
-    }
-    if(needSigner){
-      const signer = web3Provider.getSigner();
-      return signer;
-    }
-    return web3Provider;
-  }
+  
   /**register startup organization */
    const addOrganization = async (e)=>{
      try{
