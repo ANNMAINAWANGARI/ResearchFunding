@@ -1,0 +1,21 @@
+.links {
+  color: #ffffff;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+@media (max-width: 600px) {
+  .homeContainer {
+    flex-direction: column-reverse;
+  }
+  .details{
+    margin-top: 0;
+  }
+  
+}
+@media (max-width:500px){
+  .image{
+    width: '50px';
+    height:'10px';
+    object-fit: contain;
+  }
+}

@@ -1,1 +1,1 @@
-![Research Funding Image](./frontend/public/READMEPic.png)
+![Research Funding Image](./frontend/public/readme.png)

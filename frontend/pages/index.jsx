@@ -5,6 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import Navbar from "../components/Navbar";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Box>
         <Navbar/>
         <Container
+         className={styles.homeContainer}
           maxWidth="lg"
           sx={{
             display: "flex",
@@ -25,7 +27,7 @@ export default function Home() {
             height: "90vh",
           }}
         >
-          <Box mt={-15}>
+          <Box mt={-15} className={styles.details}>
             <Typography variant="h2" align="center" color='black'>
               Fund Your Research Startup
             </Typography>
@@ -37,6 +39,7 @@ export default function Home() {
             src="./researcher.png"
             alt="Home_Image"
             style={{ width: "60%", height: "80%", objectFit:'cover' }}
+            className={styles.image}
           />
         </Container>
       </Box>
