@@ -31,7 +31,6 @@ const Navbar = () => {
   const connectWallet = async () => {
     try {
       await getProviderOrSigner();
-
       setWalletConnected(true);
     } catch (err) {
       console.error(err);
@@ -42,6 +41,7 @@ const Navbar = () => {
     const userAddress = await signer.getAddress();
     setAddress(userAddress);
     console.log("userAddress is", userAddress);
+    console.log('Address isssss:',address);
   };
   useEffect(() => {
     if (!walletConnected) {
@@ -52,7 +52,7 @@ const Navbar = () => {
       });
       connectWallet();
       walletAddress();
-      console.log(address);
+      console.log('Address is:',address);
     }
   }, [walletConnected]);
   const router = useRouter();
@@ -61,8 +61,7 @@ const Navbar = () => {
       <AppBar
         position="sticky"
         elevation={3}
-        //color="transparent"
-        sx={{ height: "10vh", marginBottom: 6, backgroundColor: "black" }}
+        sx={{ marginBottom: 6, backgroundColor: "black" }}
       >
         <Container maxWidth="lg" sx={{ paddingLeft: 0, paddingRight: 0 }}>
           <Toolbar
@@ -95,7 +94,7 @@ const Navbar = () => {
               </NextJSLink>
             </div>
             </Hidden>
-            <Box sx={{ backgroundColor: "pink" }}>
+            <Box >
               {walletConnected ? (
                 <div>
                   <Typography variant="h6" color="#00A86B">
