@@ -5,7 +5,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, {useEffect,useState,useRef} from "react";
-import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 import { providers, Contract } from "ethers";
 import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
@@ -81,7 +80,6 @@ const register = () => {
           justifyContent: "center",
           marginLeft: "auto",
           marginRight: "auto",
-          //border:'1px solid #00A86B'
         }}
         onSubmit={addOrganization}
       >

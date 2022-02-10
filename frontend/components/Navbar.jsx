@@ -10,7 +10,6 @@ import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
 const Navbar = () => {
   //let userAddress;
   const [walletConnected, setWalletConnected] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const web3ModalRef = useRef();
   const getProviderOrSigner = async (needSigner = false) => {
@@ -52,7 +51,6 @@ const Navbar = () => {
       });
       connectWallet();
       walletAddress();
-      console.log('Address is:',address);
     }
   }, [walletConnected]);
   const router = useRouter();

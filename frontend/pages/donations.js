@@ -1,5 +1,5 @@
 import {
-  AppBar,
+  
   Box,
   Button,
   Container,
@@ -10,11 +10,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React,{useEffect,useRef,useState} from "react";
 import Navbar from "../components/Navbar";
+import { providers, Contract } from "ethers";
+import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
 
 function createData(
   address,
@@ -78,6 +81,71 @@ const rows = [
 ];
 
 const donations = () => {
+  const [orgs,setOrgs]=useState([])
+  const web3ModalRef = useRef();
+  const getProviderOrSigner = async (needSigner = false) => {
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new providers.Web3Provider(provider);
+    const { chainId } = await web3Provider.getNetwork();
+    if (chainId !== 4) {
+      window.alert("Please change the network to Rinkeby");
+      throw new Error("Please change the network to Rinkeby");
+    }
+    if (needSigner) {
+      const signer = web3Provider.getSigner();
+      return signer;
+    }
+    return web3Provider;
+  };
+  /**get startup organizations */
+  const getOrganizations = async ()=>{
+    try{
+      const signer = await getProviderOrSigner(true);
+      const researchFundingContract = new Contract(
+        RESEARCHFUNDING_CONTRACT_ADDRESS, abi,signer
+      );
+      //price = ethers.utils.parseUnits(amountRequested.toString(),'ether')
+      const tx = await researchFundingContract.getOrgs();
+      
+      //setLoading(true);
+      //await tx.wait();
+      setOrgs(tx);
+      console.log('before orgs areee:',orgs);
+      console.log('orgs are:',tx)
+      //setLoading(false);
+    }
+    catch(err){
+       console.error(err);
+    }
+  }
+  const getOrganization =async ()=>{
+    try{
+      const signer = await getProviderOrSigner(true);
+      const researchFundingContract = new Contract(
+        RESEARCHFUNDING_CONTRACT_ADDRESS, abi,signer
+      );
+      
+      orgs.map(async(orgAddress)=>{
+        let orgsInfo = await researchFundingContract.getOrg(orgAddress);
+        let AllorgsInfo = await Promise.all(orgsInfo);
+        console.log('orgsInfo:',AllorgsInfo)
+        //rows.push(createData(orgAddress,orgAddress.orgName,orgAddress.orgCountry,orgAddress.fundingPurpose,orgAddress.amtNeeded,orgAddress.AmountRaised));
+        rows.push(createData(AllorgsInfo));
+        console.log(rows)
+      });
+    }catch(err){
+      console.error(err);
+    }
+  }
+  
+  useEffect(()=>{
+    web3ModalRef.current = new Web3Modal({
+      network: "rinkeby",
+      providerOptions: {},
+      disableInjectedProvider: false,
+    });
+    getOrganization();
+   })
   return (
     <div>
       <Navbar/>
@@ -141,6 +209,7 @@ const donations = () => {
         </Typography>
         <Button variant="contained" sx={{ backgroundColor: "#00A86B" }}>Donate</Button>
       </Box>
+      <Button onClick={getOrganizations}>getorgs</Button>
     </div>
   );
 };
