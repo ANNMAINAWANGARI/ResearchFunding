@@ -1,58 +1,12 @@
 import { AppBar, Button, Container, Hidden, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
-import { providers, Contract } from "ethers";
 import NextJSLink from "next/link";
-import { RESEARCHFUNDING_CONTRACT_ADDRESS, abi } from "../constants";
-
+import Web3Modal from "web3modal";
+import { useContext,useEffect } from 'react'
+import { LoginContext } from "../context/LoginContext";
 const Navbar = () => {
-  //let userAddress;
-  const [walletConnected, setWalletConnected] = useState(false);
-  const [address, setAddress] = useState("");
-  const web3ModalRef = useRef();
-  const getProviderOrSigner = async (needSigner = false) => {
-    const provider = await web3ModalRef.current.connect();
-    const web3Provider = new providers.Web3Provider(provider);
-    const { chainId } = await web3Provider.getNetwork();
-    if (chainId !== 4) {
-      window.alert("Please change the network to Rinkeby");
-      throw new Error("Please change the network to Rinkeby");
-    }
-    if (needSigner) {
-      const signer = web3Provider.getSigner();
-      return signer;
-    }
-    return web3Provider;
-  };
-  /**connect wallet */
-  const connectWallet = async () => {
-    try {
-      await getProviderOrSigner();
-      setWalletConnected(true);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  const walletAddress = async () => {
-    const signer = await getProviderOrSigner(true);
-    const userAddress = await signer.getAddress();
-    setAddress(userAddress);
-    console.log("userAddress is", userAddress);
-    console.log('Address isssss:',address);
-  };
-  useEffect(() => {
-    if (!walletConnected) {
-      web3ModalRef.current = new Web3Modal({
-        network: "rinkeby",
-        providerOptions: {},
-        disableInjectedProvider: false,
-      });
-      connectWallet();
-      walletAddress();
-    }
-  }, [walletConnected]);
+  const {walletConnected,address,connectWallet,walletAddress}=useContext(LoginContext)
   const router = useRouter();
   return (
     <div>
@@ -89,7 +43,7 @@ const Navbar = () => {
 
               <NextJSLink href="/register">
                 <a style={{paddingLeft:30,color:'#00A86B'}}>RegisterOrganization</a>
-              </NextJSLink>
+            </NextJSLink>
             </div>
             </Hidden>
             <Box >
