@@ -16,10 +16,12 @@ import Navbar from "../components/Navbar";
 import { LoginContext } from "../context/LoginContext";
 import copy from "copy-to-clipboard";
 import { tableCellClasses } from '@mui/material/TableCell';
+import { useRouter } from 'next/router'
 
 const donations = () => {
   const { data } = useContext(LoginContext);
   const [copyText, setCopyText] = useState(false);
+  const router = useRouter()
   return (
     <div>
       <Navbar />
@@ -63,7 +65,7 @@ const donations = () => {
                      copy(row.address);
                      setTimeout(() => {
                       setCopyText(false);
-                    }, 4000);
+                    }, 2000);
                      //setCopyText(false);
                     }}
                   >
@@ -101,9 +103,9 @@ const donations = () => {
         }}
       >
         <Typography align="center" gutterBottom>
-          Click the address to copy it and make a donation
+          Please click the address to copy it, wait untill it is copied before proceeding to make a donation.
         </Typography>
-        <Button variant="contained" sx={{ backgroundColor: "#00A86B" }}>
+        <Button variant="contained" sx={{ backgroundColor: "#00A86B" }} onClick={()=>router.push('/donate')}>
           Donate
         </Button>
       </Box>
