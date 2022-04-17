@@ -81,6 +81,7 @@ export const LoginProvider = ({ children }) => {
     }
   };
   /**donate funds */
+  /**withraw funds */
   /**get wallet address */
   const walletAddress = async () => {
     const signer = await getProviderOrSigner(true);
